@@ -1,10 +1,13 @@
+using ApiProject.DataAccess;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Add services to the container. 
 builder.Services.AddControllers();
 
-//builder.Services.AddDbContext<>
+var connection = builder.Configuration.GetSection("DbConnection").Value;
+builder.Services.AddDbContext<DatingAppContext>(opts => opts.UseNpgsql(connection));
 
 var app = builder.Build();
 
