@@ -9,13 +9,13 @@ builder.Services.AddControllers();
 var connection = builder.Configuration.GetSection("DbConnection").Value;
 builder.Services.AddDbContext<DatingAppContext>(opts => opts.UseNpgsql(connection));
 
+//Adding cors
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
+app.UseCors( builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 
 app.MapControllers();
 
