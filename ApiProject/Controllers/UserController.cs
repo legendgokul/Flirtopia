@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiProject.Controllers;
 
-[ApiController]
-[Route("api/[controller]")] 
-public class UserController : ControllerBase
+public class UserController : BaseController
 {
     private DatingAppContext _context;
     public UserController(DatingAppContext context)
@@ -20,6 +18,15 @@ public class UserController : ControllerBase
     public async Task<ActionResult<List<AppUser>>> getAppUser()
     {
         var User = await _context.appUser.ToListAsync();
+
+        return Ok(User);
+    }
+
+    [HttpGet]
+    [Route("GetUserID/{id}")]
+    public async Task<ActionResult<AppUser>> GetUserID(int id)
+    {
+        var User = await _context.appUser.Where(x=>x.Id ==  id).FirstOrDefaultAsync();
 
         return Ok(User);
     }
