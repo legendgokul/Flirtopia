@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
+namespace ApiProject.Data.CustomModels;
 public class LoginDTO
 {
 

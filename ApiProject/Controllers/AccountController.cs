@@ -1,8 +1,9 @@
 using System.Security.Cryptography;
 using System.Text;
-using ApiProject.DataAccess;
+using ApiProject.BusinessLayer.Interface;
+using ApiProject.Data.CustomModels;
+using ApiProject.Data.AppContextFile;
 using ApiProject.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,14 +12,17 @@ namespace ApiProject.Controllers;
 public class AccountController: BaseController{
      
      private readonly DatingAppContext _context;
-     public AccountController(DatingAppContext context){
+     private readonly ITokenService _tokenService;
+     
+     public AccountController(DatingAppContext context, ITokenService tokenService){
         this._context = context;
+        this._tokenService = tokenService;
      }
 
 
      [HttpPost]
      [Route("register")]
-     public async Task<ActionResult<AppUser>> Register(RegisterDTO registerInfo)
+     public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerInfo)
      {      
 
         if(await userExists(registerInfo.userName.ToLower())){ return BadRequest("UserName Taken !!!");} 
@@ -33,12 +37,15 @@ public class AccountController: BaseController{
         _context.appUser.Add(user);
         await _context.SaveChangesAsync();
 
-        return user;
+        return new UserDTO{
+         userName = user.UserName,
+         token = _tokenService.createToken(user)
+        };
      }
 
       [HttpPost]
       [Route("Login")]
-      public async Task<ActionResult<AppUser>> Login (LoginDTO loginDTO)
+      public async Task<ActionResult<UserDTO>> Login (LoginDTO loginDTO)
       {
          //SingleOrDefault will throw exception if there are 2 or more items identified for the filter which we applied
          var user = await _context.appUser.SingleOrDefaultAsync(x=>x.UserName.ToLower() == loginDTO.username.ToLower());
@@ -54,7 +61,10 @@ public class AccountController: BaseController{
             if(paswordHash[i] != user.PasswordHash[i]) return Unauthorized("Password does not Match!");
          }
 
-         return user;
+       return new UserDTO{
+         userName = user.UserName,
+         token = _tokenService.createToken(user)
+        };
       }
 
 

@@ -1,7 +1,7 @@
 ﻿using ApiProject.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ApiProject.DataAccess;
+namespace ApiProject.Data.AppContextFile;
 
 public class DatingAppContext : DbContext
 {

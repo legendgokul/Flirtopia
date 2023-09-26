@@ -1,10 +1,12 @@
-﻿using ApiProject.DataAccess;
+﻿using ApiProject.Data.AppContextFile;
 using ApiProject.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiProject.Controllers;
 
+[Authorize]
 public class UserController : BaseController
 {
     private DatingAppContext _context;
