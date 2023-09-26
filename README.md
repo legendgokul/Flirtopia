@@ -1,8 +1,21 @@
 # DotnetCoreLearningModule
+<h2> What i learnt by doing this project !</h2>
+<ol>
+  <li>HMAC512 Authentication for User password.</li>
+  <li>Entity Framework ( <b>DB first</b> and <b>Code first Approch</b> )</li>
+  <li></li>
+</ol>
+
+<h3>Few new Concept</h3>
+<ol>
+  <li>Garbage Collection</li>
+  <li>DataAnnotations in DTO</li>
+  <li>Implementing Cors Policy</li>
+</ol>
 
 <h2>Setup</h2>
 <ul>
-<li>to add SSL cirtificate for local use</li>
-<li></li>
+  <li>To add SSL cirtificate for local use</li>
+  <li></li>
 </ul>
 
