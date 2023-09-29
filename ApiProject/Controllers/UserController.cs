@@ -15,6 +15,7 @@ public class UserController : BaseController
         this._context = context;
     }
 
+    [AllowAnonymous]
     [HttpGet]
     [Route("GetUserList")]
     public async Task<ActionResult<List<AppUser>>> getAppUser()

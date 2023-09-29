@@ -1,0 +1,41 @@
+<form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+    <h1 class="text-center text-primary">Sign Up😘</h1>
+    <hr>
+    <div class="form-floating mb-3">
+        <input 
+            type="email" 
+            name="username" 
+            [(ngModel)]="model.username"  
+            class="form-control" 
+            id="Email" 
+            placeholder="Enter Username"
+            aria-describedby="emailHelp"
+        >
+      <label for="Email" class="form-label">Email address</label>
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    
+    <div class="form-floating mb-3">
+        <input 
+            type="password" 
+            name="password" 
+            [(ngModel)]="model.password"  
+            placeholder="Enter Password" 
+            class="form-control" 
+            id="Password"
+        >
+        <label for="Password" class="form-label">Password</label>
+    </div>
+
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="SingedInCheck">
+      <label class="form-check-label" for="SingedInCheck">keep me singed in</label>
+    </div>
+    
+    <div class="text-center mb-3">    
+        <button type="submit" class="btn btn-outline-primary  me-4">Submit</button>
+        <button type="button" (click)="cancel()" class="btn btn-outline-danger ">Cancel</button>
+    </div>
+</form>
+
+<h2>{{userFromHomeComponent}}</h2>

@@ -5,7 +5,7 @@ public class RegisterDTO
 {
     [Required]
     [MinLength(8)]
-    public String userName {get;set;}
+    public String username {get;set;}
 
      [Required]
     public String password {get;set;}

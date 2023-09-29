@@ -25,12 +25,12 @@ public class AccountController: BaseController{
      public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerInfo)
      {      
 
-        if(await userExists(registerInfo.userName.ToLower())){ return BadRequest("UserName Taken !!!");} 
+        if(await userExists(registerInfo.username.ToLower())){ return BadRequest("UserName Taken !!!");} 
         using var hmac = new HMACSHA512();  // create a instance which will generate 1 key which is used for Salting hash
         
         var user = new AppUser{
-            UserName = registerInfo.userName,
-            Email = registerInfo.userName +"@gmail.com",
+            UserName = registerInfo.username,
+            Email = registerInfo.username +"@gmail.com",
             PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerInfo.password)), //cpnvert password string -> byte using a random generated key
             PasswordSalt = hmac.Key // each instance of HMACSHA512 will have a key auto generated.
         };
