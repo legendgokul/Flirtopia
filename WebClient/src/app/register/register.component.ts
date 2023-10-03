@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AccountService } from '../_services/account.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ export class RegisterComponent {
   @Output() RegisterToggle = new EventEmitter();
   model :any ={};
 
-  constructor(private accountService :AccountService) {
+  constructor(private accountService :AccountService, private toastr:ToastrService) {
 
   }
 
@@ -28,7 +29,8 @@ export class RegisterComponent {
                         console.log("register success ");
                         this.RegisterToggle.emit(false);
                       },
-      error: (err) => console.error(err)
+      error: (err) => {console.error(err),
+      this.toastr.error(err.error,"Register new user Failed.")}
     });    
   }
 

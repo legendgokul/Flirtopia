@@ -2,23 +2,31 @@
   <div class="container d-flex">
 
     <div class="d-flex">
-      <a class="navbar-brand" href="#">DatingApp💘</a>
-      <ul *ngIf="accountservice.currentUser$ |async" class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Matches</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">List</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link ">Messages</a>
-        </li>
+      <a class="navbar-brand" routerLink="/" >DatingApp💘</a>
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <ng-container *ngIf="accountservice.currentUser$ |async" >
+            <!-- routerLink : part of angular routing , helps us in redirection to diff component on click 
+             routerLinkActive : Adds specified css class if the `route is active -->
+             <li class="nav-item">
+              <a class="nav-link" routerLink="/members" routerLinkActive="Active">Matches</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/lists" routerLinkActive="Active">List</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/messages" routerLinkActive="Active">Messages</a>
+            </li>
+        </ng-container>
       </ul>
     </div>
 
     <div>
-      <div *ngIf="accountservice.currentUser$ |async"  class="dropdown"  dropdown>
-        <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{accountservice.currentUserName}}</a>
+      <!-- *ngIf directive will be rendered if and only if the currentUser$ observable emits a truthy value. When the observable emits a value, the async pipe will unwrap it,
+           and if the value is truthy, the element will be displayed. 
+           If the observable hasn't emitted any value yet, or if it emits a falsy value (e.g., null or undefined), the element will not be displayed. 
+           we can surrend it with as to get the data from observable .-->
+      <div *ngIf="(accountservice.currentUser$ |async) as user"  class="dropdown"  dropdown>
+        <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.userName}}</a>
         <div class="dropdown-menu" *dropdownMenu>
           <a class="dropdown-item" >Edit Profile</a>
           <a class="dropdown-item" (click)="Logout()" >Log out</a>
@@ -27,6 +35,7 @@
 
 
       <form *ngIf="!(accountservice.currentUser$ |async)" #LoginForm="ngForm" class="d-flex" (ngSubmit)="Login()" autocomplete="off">
+        <!-- [(ngModel)] is a 2 way binding indicating if any changes happent o variable then reflect in ui , any changes happened through html should reflect in ts -->
         <input name="username" [(ngModel)]="model.username" class="form-control me-2" type="text"
           placeholder="Username">
 
