@@ -29,8 +29,8 @@ export class RegisterComponent {
                         console.log("register success ");
                         this.RegisterToggle.emit(false);
                       },
-      error: (err) => {console.error(err),
-      this.toastr.error(err.error,"Register new user Failed.")}
+      error: (err) => {
+      this.toastr.error(err,"Register new user Failed.")}
     });    
   }
 
