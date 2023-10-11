@@ -14,6 +14,7 @@ import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { CommonModulesModule } from './_modules/common-modules/common-modules.module';
 import { ErrorInterceptor } from './_interceptor/error.interceptor';
+import { PageNotFoundComponent } from './_errComp/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ErrorInterceptor } from './_interceptor/error.interceptor';
     MemberListComponent,
     MemberDetailComponent,
     ListsComponent,
-    MessagesComponent
+    MessagesComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

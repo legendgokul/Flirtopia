@@ -32,10 +32,6 @@ export class NavComponent {
       next: () =>{  // using () empty param since we are not gonna use response value.
         this.router.navigateByUrl("/members"), // navigating users to members component
         this.model={}  // resetting model to remove store username and password
-      },
-      error: err =>{
-        this.toastr.error(err.error);
-        console.log(err);
       }
     })
   }

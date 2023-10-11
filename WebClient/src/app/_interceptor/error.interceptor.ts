@@ -15,21 +15,23 @@ import {
 } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private toastr:ToastrService) {}
+  constructor(private toastr:ToastrService, private router:Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error:HttpErrorResponse) =>{
         if(error){    // checking if there is any error obtained in current http request.
+          console.log(error);
           switch(error.status){
             case 400:  // bad request.
               { 
                 if (error.error && error.error.errors) {
-                  throw  Object.values(error.error.errors).flat();
+                  throw  Object.values(error.error.errors).flat(); 
                 } else {
                   // Handle the error in a different way or provide a fallback
                   this.toastr.error(error.error, error.status.toString());
@@ -50,6 +52,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             case 404:  //wrong url / missing endpoint .
               { 
                 //we can redirect the user to page not found component yet to build
+                this.router.navigateByUrl("not-found");
                 break;
               }
             default :
@@ -58,7 +61,6 @@ export class ErrorInterceptor implements HttpInterceptor {
               break;
             }
           }
-
         }
         throw error;  //similar to dotnet catch post logging we will throw it ;
       })

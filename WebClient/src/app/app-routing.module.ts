@@ -6,6 +6,7 @@ import { MemberDetailComponent } from './member/member-detail/member-detail.comp
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { authGuard } from './_auth/auth.guard';
+import { PageNotFoundComponent } from './_errComp/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {path:'',component:HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
     {path:'messages',component:MessagesComponent},
     ] 
   },
+  {path:"not-found",component:PageNotFoundComponent},
   {path:'**',component:HomeComponent ,pathMatch:'full'},
 ];
 
