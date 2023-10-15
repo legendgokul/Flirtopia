@@ -1,6 +1,8 @@
 using ApiProject.BusinessLayer.Interface;
 using ApiProject.BusinessLayer.Service;
 using ApiProject.Data.AppContextFile;
+using ApiProject.DataAccess.Interface;
+using ApiProject.DataAccess.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiProject.Extensions;
@@ -12,10 +14,14 @@ public static class ApplicationServiceExtensions
 
         var connection = config.GetSection("DbConnection").Value;
         services.AddDbContext<DatingAppContext>(opts => opts.UseNpgsql(connection));
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 
         //Adding cors
         services.AddCors();
         services.AddScoped<ITokenService,TokenService>();
+        services.AddScoped<IUserRepository,UserRepository>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         return services;
 
     }

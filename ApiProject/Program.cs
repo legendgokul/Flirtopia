@@ -1,5 +1,8 @@
+using ApiProject.Data;
+using ApiProject.Data.AppContextFile;
 using ApiProject.Extensions;
 using ApiProject.Middleware;
+using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,5 +29,18 @@ app.UseAuthorization();  // check if you have token given by this server
 
 app.MapControllers();
 
+//seeding data.
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+
+try{
+    var context = services.GetRequiredService<DatingAppContext>();
+    await context.Database.MigrateAsync(); //will apply pending migration or create whole database if its is missing.
+    await SeedData.SeedUser(context);
+}
+catch(Exception ex){
+ var logger =  services.GetService<ILogger<Program>>();
+ logger.LogError(ex,"An error occurred during migration");
+}
 
 app.Run();

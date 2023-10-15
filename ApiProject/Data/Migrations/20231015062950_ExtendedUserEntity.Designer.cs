@@ -3,6 +3,7 @@ using System;
 using ApiProject.Data.AppContextFile;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiProject.Data.Migrations
 {
     [DbContext(typeof(DatingAppContext))]
-    partial class DatingAppContextModelSnapshot : ModelSnapshot
+    [Migration("20231015062950_ExtendedUserEntity")]
+    partial class ExtendedUserEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +39,7 @@ namespace ApiProject.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateOnly>("DateOfBirth")
                         .HasColumnType("date");
@@ -55,7 +57,7 @@ namespace ApiProject.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("LastActive")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("bytea");
@@ -85,7 +87,7 @@ namespace ApiProject.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
-                    b.Property<int>("AppUserId")
+                    b.Property<int>("AppUserid")
                         .HasColumnType("integer");
 
                     b.Property<bool>("IsMain")
@@ -99,7 +101,7 @@ namespace ApiProject.Data.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("AppUserid");
 
                     b.ToTable("Photo");
                 });
@@ -108,7 +110,7 @@ namespace ApiProject.Data.Migrations
                 {
                     b.HasOne("ApiProject.Entities.AppUser", "AppUser")
                         .WithMany("Photos")
-                        .HasForeignKey("AppUserId")
+                        .HasForeignKey("AppUserid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -13,6 +13,7 @@
   <li>DataAnnotations in DTO.</li>
   <li>Implementing Cors Policy.</li>
   <li>ISericesCollection Extension files for Code Modularity.</li>
+  <li>AutoMapper</li>
 </ol>
 
 <h2>Setup</h2>
