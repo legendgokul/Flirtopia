@@ -1,1 +1,31 @@
-<p>member-detail works!</p>
+<div *ngIf="memberInfo">
+    <div class="col-4">
+        <div class="card">
+            <img src="{{memberInfo.photoUrl ||'./assets/user.png'}}" class="card-img-top img-thumbnail" >
+            <div class="card-body">
+                <div>
+                    <strong>Location:</strong>
+                    <p>{{memberInfo.city}},{{memberInfo.country}}</p>
+                </div>
+                <div>
+                    <strong>Age:</strong>
+                    <p>{{memberInfo.age}}</p>
+                </div>
+                <div>
+                    <strong>Last active:</strong>
+                    <p>{{memberInfo.lastActive}}</p>
+                </div>
+                <div>
+                    <strong>Member since:</strong>
+                    <p>{{memberInfo.createdOn}}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="btn-group d-flex">
+                    <button class="btn btn btn-info"><i class="fa fa-heart"></i> like</button>
+                    <button class="btn btn btn-success"><i class="fa fa-comments"></i> Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
