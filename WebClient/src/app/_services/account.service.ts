@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, map } from 'rxjs';
 import { User } from '../_CustomModels/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
 
-  baseUrl = "https://localhost:5000/api/" ;
+  baseUrl = environment.apiUrl ;
   //creating a new Observable.
   // it can store and emit values to subscribers.
   private currentUserValue = new BehaviorSubject<User|null>(null); 

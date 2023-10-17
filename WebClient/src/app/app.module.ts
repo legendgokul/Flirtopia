@@ -15,6 +15,8 @@ import { MessagesComponent } from './messages/messages.component';
 import { CommonModulesModule } from './_modules/common-modules/common-modules.module';
 import { ErrorInterceptor } from './_interceptor/error.interceptor';
 import { PageNotFoundComponent } from './_errComp/page-not-found/page-not-found.component';
+import { MemberCardComponent } from './member/member-card/member-card.component';
+import { JwtInterceptor } from './_interceptor/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { PageNotFoundComponent } from './_errComp/page-not-found/page-not-found.
     MemberDetailComponent,
     ListsComponent,
     MessagesComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    MemberCardComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import { PageNotFoundComponent } from './_errComp/page-not-found/page-not-found.
     FormsModule,
     CommonModulesModule
   ],
-  providers: [{provide:HTTP_INTERCEPTORS, useClass:ErrorInterceptor,multi:true}],
+  providers: [{provide:HTTP_INTERCEPTORS, useClass:ErrorInterceptor,multi:true},
+    {provide:HTTP_INTERCEPTORS, useClass:JwtInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

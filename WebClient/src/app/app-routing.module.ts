@@ -15,7 +15,7 @@ const routes: Routes = [
   canActivate:[authGuard],
   children:[
     {path:'members',component:MemberListComponent},
-    {path:'members/:id',component:MemberDetailComponent},
+    {path:'members/:userName',component:MemberDetailComponent}, //going to pass user mame to get particular user.
     {path:'lists',component:ListsComponent},
     {path:'messages',component:MessagesComponent},
     ] 
