@@ -1,4 +1,4 @@
-<div *ngIf="memberInfo">
+<div *ngIf="memberInfo" class="row">
     <div class="col-4">
         <div class="card">
             <img src="{{memberInfo.photoUrl ||'./assets/user.png'}}" class="card-img-top img-thumbnail" >
@@ -27,5 +27,25 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-8">
+        <tabset class="member-tabset">
+            <tab heading="About">
+                <h4>Description :</h4>
+                <p>{{memberInfo.introduction}}</p>
+                <h4>Looking for :</h4>
+                <p>{{memberInfo.lookingFor}}</p>
+            </tab>
+            <tab heading="Interests">
+                <h4>Interests :</h4>
+                <p>{{memberInfo.interests}}</p>
+            </tab>
+            <tab heading="Photos" #photoTab="tab">
+                <gallery *ngIf="photoTab.active" thumbPosition="left" [items]="images"></gallery>
+            </tab>
+            <tab heading="Messages">
+                <p>comming soon!</p>
+            </tab>
+        </tabset>
     </div>
 </div>

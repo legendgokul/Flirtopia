@@ -12,7 +12,7 @@ import { MemberListComponent } from './member/member-list/member-list.component'
 import { MemberDetailComponent } from './member/member-detail/member-detail.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
-import { CommonModulesModule } from './_modules/common-modules/common-modules.module';
+import { CommonModules } from './_modules/common-modules/common-modules.module';
 import { ErrorInterceptor } from './_interceptor/error.interceptor';
 import { PageNotFoundComponent } from './_errComp/page-not-found/page-not-found.component';
 import { MemberCardComponent } from './member/member-card/member-card.component';
@@ -25,7 +25,6 @@ import { JwtInterceptor } from './_interceptor/jwt.interceptor';
     HomeComponent,
     RegisterComponent,
     MemberListComponent,
-    MemberDetailComponent,
     ListsComponent,
     MessagesComponent,
     PageNotFoundComponent,
@@ -37,7 +36,7 @@ import { JwtInterceptor } from './_interceptor/jwt.interceptor';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    CommonModulesModule
+    CommonModules
   ],
   providers: [{provide:HTTP_INTERCEPTORS, useClass:ErrorInterceptor,multi:true},
     {provide:HTTP_INTERCEPTORS, useClass:JwtInterceptor,multi:true}],
