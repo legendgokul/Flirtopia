@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { MemberListComponent } from './member/member-list/member-list.component';
-import { MemberDetailComponent } from './member/member-detail/member-detail.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { CommonModules } from './_modules/common-modules/common-modules.module';
@@ -17,6 +16,8 @@ import { ErrorInterceptor } from './_interceptor/error.interceptor';
 import { PageNotFoundComponent } from './_errComp/page-not-found/page-not-found.component';
 import { MemberCardComponent } from './member/member-card/member-card.component';
 import { JwtInterceptor } from './_interceptor/jwt.interceptor';
+import { MemberEditComponent } from './member/member-edit/member-edit.component';
+import { LoadingInterceptor } from './_interceptor/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { JwtInterceptor } from './_interceptor/jwt.interceptor';
     ListsComponent,
     MessagesComponent,
     PageNotFoundComponent,
-    MemberCardComponent
+    MemberCardComponent,
+    MemberEditComponent
   ],
   imports: [
     BrowserModule,
@@ -38,8 +40,11 @@ import { JwtInterceptor } from './_interceptor/jwt.interceptor';
     FormsModule,
     CommonModules
   ],
-  providers: [{provide:HTTP_INTERCEPTORS, useClass:ErrorInterceptor,multi:true},
-    {provide:HTTP_INTERCEPTORS, useClass:JwtInterceptor,multi:true}],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:ErrorInterceptor,multi:true},
+    {provide:HTTP_INTERCEPTORS, useClass:JwtInterceptor,multi:true},
+    {provide:HTTP_INTERCEPTORS, useClass:LoadingInterceptor,multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
