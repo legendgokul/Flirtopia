@@ -10,7 +10,11 @@ namespace ApiProject.Helpers{
             .ForMember(dest => dest.Age, opt => opt.MapFrom(src => CalculateAge(src.DateOfBirth)))
             .ForMember(dest => dest.photoUrl,
             opt => opt.MapFrom(src =>src.Photos.First(x=>x.IsMain).Url));
+
             CreateMap<Photo,PhotoDTO>();
+
+            //Update mapper.
+            CreateMap<MemberUpdateDto,AppUser>();
         }
 
         /// <summary>

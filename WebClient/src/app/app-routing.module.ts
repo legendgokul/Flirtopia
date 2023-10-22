@@ -7,6 +7,8 @@ import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { authGuard } from './_auth/auth.guard';
 import { PageNotFoundComponent } from './_errComp/page-not-found/page-not-found.component';
+import { MemberEditComponent } from './member/member-edit/member-edit.component';
+import { preventUnsavedChangesGuard } from './_auth/prevent-unsaved-changes.guard';
 
 const routes: Routes = [
   {path:'',component:HomeComponent },
@@ -18,6 +20,7 @@ const routes: Routes = [
     {path:'members/:userName',component:MemberDetailComponent}, //going to pass user mame to get particular user.
     {path:'lists',component:ListsComponent},
     {path:'messages',component:MessagesComponent},
+    {path:'member/edit',component:MemberEditComponent , canDeactivate:[preventUnsavedChangesGuard]}
     ] 
   },
   {path:"not-found",component:PageNotFoundComponent},

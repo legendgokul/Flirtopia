@@ -24,17 +24,10 @@ export class AppComponent implements OnInit {
   //A lifecycle hook that is called after Angular has initialized all data-bound properties of a directive.
   ngOnInit(): void {
    
-    this.getUsers();
+    //this.getUsers();
     this.setCurrentUser();
   }
 
-  getUsers(){
-    this.http.get<any>('https://localhost:5001/api/User/GetUserList').subscribe({
-      next: (resp) => {this.users = resp},
-      error: (error) => {console.log(error)},
-      complete : ()=> {console.log("Api request Completed")},
-    }); 
-  }
   //we check localstorage if any user info is saved if yes inject it to behavioursubject.
   setCurrentUser(){
     const LocalUser = localStorage.getItem('user');
