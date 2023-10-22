@@ -22,3 +22,29 @@
   <li></li>
 </ul>
 
+<h2>Each Module and what i learnt:</h2>
+
+<h3>Module 8</h3>
+<ul>
+  <li>Entity Framework Relationships</li>
+  <li>Seeding Data into Database using custom generated Data.</li>
+  <li>Design using Repository Pattern</li>
+  <li>Using AutoMapper</li>
+</ul>
+
+<h3>Module 9</h3>
+<ul>
+  <li>Using Inteceptor to Add JWT token in Request Header.</li>
+  <li>Improved View/Edit page Using Bootstrap</li>
+  <li>ngx gallery to show photo gallery</li>
+</ul>
+
+<h3>Module 10</h3>
+<ul>
+  <li>Angular Template Forms, using FormID to bind submit button.</li>
+  <li>CanDeactivate Route Guard.</li>
+  <li>@ViewChild Decorator to view HTML elements and their state.</li>
+  <li>Loading Indicator using ngx-spinner</li>
+  <li>Caching Data using Angular Services</li>
+</ul>
+
