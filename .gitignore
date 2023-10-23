@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # Hiding Debug files under .vscode
 .vscode/
+
+.appsettings.json
+/appsettings.json
