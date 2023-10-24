@@ -4,6 +4,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [],
@@ -16,13 +17,15 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     }),
     ToastrModule.forRoot({
       positionClass:'toast-top-full-width',timeOut:2000
-    })
+    }),
+    FileUploadModule
   ],
   exports:[
     ToastrModule,
     BsDropdownModule,
     TabsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    FileUploadModule
     ]
 })
 export class CommonModules { }

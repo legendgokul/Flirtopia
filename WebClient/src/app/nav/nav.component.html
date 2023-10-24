@@ -26,6 +26,7 @@
            If the observable hasn't emitted any value yet, or if it emits a falsy value (e.g., null or undefined), the element will not be displayed. 
            we can surrend it with as to get the data from observable .-->
       <div *ngIf="(accountservice.currentUser$ |async) as user"  class="dropdown"  dropdown>
+        <img class="mx-2" src="{{user.photoUrl}}" alt="user pic">
         <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.userName}}</a>
         <div class="dropdown-menu" *dropdownMenu>
           <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>

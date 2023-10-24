@@ -39,7 +39,7 @@ public class AccountController: BaseController{
 
         return new UserDTO{
          userName = user.UserName,
-         token = _tokenService.createToken(user)
+         token = _tokenService.createToken(user) 
         };
      }
 
@@ -48,7 +48,10 @@ public class AccountController: BaseController{
       public async Task<ActionResult<UserDTO>> Login (LoginDTO loginDTO)
       {
          //SingleOrDefault will throw exception if there are 2 or more items identified for the filter which we applied
-         var user = await _context.appUser.SingleOrDefaultAsync(x=>x.UserName.ToLower() == loginDTO.username.ToLower());
+         var user = await _context.appUser
+            .Include(p =>p.Photos) // we are eager loading to join photos table to return respective data.
+            .FirstOrDefaultAsync(x=>x.UserName == loginDTO.username.ToLower());
+            
          if(user == null){
             return Unauthorized("UserName Does not Exist!");  // returning unauthorised because provided name is not saved in Db. 
          }
@@ -63,7 +66,8 @@ public class AccountController: BaseController{
 
        return new UserDTO{
          userName = user.UserName,
-         token = _tokenService.createToken(user)
+         token = _tokenService.createToken(user),
+         PhotoUrl = user.Photos.FirstOrDefault(x=>x.IsMain ==true)?.Url
         };
       }
 

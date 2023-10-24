@@ -3,6 +3,7 @@ using ApiProject.BusinessLayer.Service;
 using ApiProject.Data.AppContextFile;
 using ApiProject.DataAccess.Interface;
 using ApiProject.DataAccess.Repository;
+using ApiProject.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiProject.Extensions;
@@ -21,7 +22,12 @@ public static class ApplicationServiceExtensions
         services.AddCors();
         services.AddScoped<ITokenService,TokenService>();
         services.AddScoped<IUserRepository,UserRepository>();
+        services.AddScoped<IPhotoService,PhotoService>();
+        
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+        //binding cloudinary config into Iconfiguration.
+        services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
         return services;
 
     }

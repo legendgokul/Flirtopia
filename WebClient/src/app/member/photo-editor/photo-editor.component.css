@@ -1,0 +1,22 @@
+
+
+.my-drop-zone-large {
+    border: 2px dashed darkorchid;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    height: 200px; /* Adjust the height as desired */
+}
+
+.file-upload-section {
+    margin-top: 40px;
+}
+
+.queue-progress {
+    margin-top: 20px;
+}
+
+input[type = file]{
+    color: transparent;
+}

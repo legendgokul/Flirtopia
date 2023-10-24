@@ -48,3 +48,12 @@
   <li>Caching Data using Angular Services</li>
 </ul>
 
+<h3>Module 11</h3>
+<ul>
+  <li>Custom Library Extensions</li>
+  <li>Using Cloudinary for Image Upload.</li>
+  <li>Add/Edit/Delete Photo features</li>
+  <li>Using Observables to maintain responsive Data management(user profile)</li>
+</ul>
+
+
