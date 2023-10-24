@@ -7,7 +7,7 @@ public class AppUser
     public string Email { get; set; }
     public byte[] PasswordHash {get;set;}
     public byte[] PasswordSalt {get;set;}
-    public DateOnly DateOfBirth {get;set;}
+    public DateTime DateOfBirth {get;set;}
     public string knownAs {get;set;}
     public DateTime CreatedOn {get;set;} = DateTime.UtcNow;
     public DateTime LastActive {get;set;} = DateTime.UtcNow;

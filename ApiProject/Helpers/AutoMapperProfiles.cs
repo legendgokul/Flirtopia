@@ -15,6 +15,9 @@ namespace ApiProject.Helpers{
 
             //Update mapper.
             CreateMap<MemberUpdateDto,AppUser>();
+
+            //redister mapper
+            CreateMap<RegisterDTO,AppUser>();
         }
 
         /// <summary>
@@ -22,11 +25,10 @@ namespace ApiProject.Helpers{
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
-        public static int CalculateAge(DateOnly date)
+        public static int CalculateAge(DateTime date)
         {
                 
-            DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow.Date); // Get today's DateOnly in UTC
-
+            var today = DateTime.UtcNow; // Get today's DateOnly in UTC.F
             int age = today.Year - date.Year;
 
             if (date.Month > today.Month || (date.Month == today.Month && date.Day > today.Day))

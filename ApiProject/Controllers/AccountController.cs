@@ -6,6 +6,7 @@ using ApiProject.Data.AppContextFile;
 using ApiProject.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace ApiProject.Controllers;
 
@@ -13,10 +14,12 @@ public class AccountController: BaseController{
      
      private readonly DatingAppContext _context;
      private readonly ITokenService _tokenService;
+     public readonly IMapper _mapper;
      
-     public AccountController(DatingAppContext context, ITokenService tokenService){
+     public AccountController(DatingAppContext context, ITokenService tokenService, IMapper mapper){
         this._context = context;
         this._tokenService = tokenService;
+        this._mapper = mapper;
      }
 
 
@@ -26,20 +29,25 @@ public class AccountController: BaseController{
      {      
 
         if(await userExists(registerInfo.username.ToLower())){ return BadRequest("UserName Taken !!!");} 
+        
+        var user = _mapper.Map<AppUser>(registerInfo);
+        
         using var hmac = new HMACSHA512();  // create a instance which will generate 1 key which is used for Salting hash
         
-        var user = new AppUser{
-            UserName = registerInfo.username,
-            Email = registerInfo.username +"@gmail.com",
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerInfo.password)), //cpnvert password string -> byte using a random generated key
-            PasswordSalt = hmac.Key // each instance of HMACSHA512 will have a key auto generated.
-        };
+        
+         user.UserName = registerInfo.username;
+         user.Email = registerInfo.username +"@gmail.com";
+         user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerInfo.password)); //cpnvert password string -> byte using a random generated key
+         user.PasswordSalt = hmac.Key; // each instance of HMACSHA512 will have a key auto generated.
+        
         _context.appUser.Add(user);
         await _context.SaveChangesAsync();
 
         return new UserDTO{
          userName = user.UserName,
-         token = _tokenService.createToken(user) 
+         token = _tokenService.createToken(user),
+         KnownAs = user.knownAs
+
         };
      }
 
@@ -67,7 +75,8 @@ public class AccountController: BaseController{
        return new UserDTO{
          userName = user.UserName,
          token = _tokenService.createToken(user),
-         PhotoUrl = user.Photos.FirstOrDefault(x=>x.IsMain ==true)?.Url
+         PhotoUrl = user.Photos.FirstOrDefault(x=>x.IsMain ==true)?.Url,
+         KnownAs = user.knownAs
         };
       }
 

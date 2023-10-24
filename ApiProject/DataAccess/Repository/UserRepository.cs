@@ -19,7 +19,7 @@ namespace ApiProject.DataAccess.Repository{
         public async Task<MemberDTO> GetMemberByNameAsync(string name)
         {
             return await _context.appUser
-            .Where(x=>x.UserName == name)
+            .Where(x=>x.UserName == name.ToLower())
             .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync();
         }
@@ -40,7 +40,7 @@ namespace ApiProject.DataAccess.Repository{
         {
             return await _context.appUser
             .Include(p =>p.Photos) // we are eager loading to join photos table to return respective data.
-            .FirstOrDefaultAsync(x=>x.UserName == name);
+            .FirstOrDefaultAsync(x=>x.UserName == name.ToLower());
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()

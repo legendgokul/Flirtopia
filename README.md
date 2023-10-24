@@ -56,4 +56,13 @@
   <li>Using Observables to maintain responsive Data management(user profile)</li>
 </ul>
 
+<h3>Module 12</h3>
+<ul>
+  <li>Use Reactive forms</li>
+  <li>Use Angular validation for inputs</li>
+  <li>Custom validators for password</li>
+  <li>implement reusable form controls</li>
+</ul>
+
+
 

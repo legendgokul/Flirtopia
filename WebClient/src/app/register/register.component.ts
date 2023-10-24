@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-register',
@@ -11,17 +13,19 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Vali
 export class RegisterComponent {
   //input tag to get datafrom parent.
   @Input() userFromHomeComponent:any;
-
   @Output() RegisterToggle = new EventEmitter();
-  model :any ={};
-  registerForm : FormGroup = new FormGroup({}); // cannot declare it as undefined hence initialize it with empty object.
 
-  constructor(private accountService :AccountService, private toastr:ToastrService,private fb:FormBuilder ) {
+  registerForm : FormGroup = new FormGroup({}); // cannot declare it as undefined hence initialize it with empty object.
+  minValidDate : Date = new Date(); //create minValidDate with current date 
+  validationErrors:string[] |undefined;
+
+  constructor(private accountService :AccountService, private toastr:ToastrService,private fb:FormBuilder, private router :Router ) {
 
   }
 
   ngOnInit() :void {
     this.initializeForm();
+    this.minValidDate.setFullYear(this.minValidDate.getFullYear() - 18);
   }
 
   // initializing the password.
@@ -36,7 +40,7 @@ export class RegisterComponent {
       country:['',Validators.required],
       password:['', [ Validators.required,
                         Validators.minLength(4), 
-                        Validators.maxLength(8)]],
+                        Validators.maxLength(16)]],
       confirmPassword:['',[Validators.required,this.matchValues('password')]]
     });
 
@@ -57,21 +61,27 @@ export class RegisterComponent {
   }
 
   register() {
-
-    console.log(this.registerForm?.value);
-
-    /*
-    console.log(this.model);
-    this.accountService.register(this.model).subscribe({
+    const dob = this.getDateOnly(this.registerForm.controls['dateOfBirth'].value);
+    const values = {...this.registerForm.value, dateOfBirth :dob}
+    console.log(values);
+    
+    this.accountService.register(values).subscribe({
       next: (resp) => {
-                        console.log("register success ");
-                        this.RegisterToggle.emit(false);
+                        this.router.navigateByUrl('/members')
                       },
       error: (err) => {
-      this.toastr.error(err,"Register new user Failed.")}
-    });   */ 
+        this.validationErrors = err;
+      }
+    });   
 
+  }
 
+  private getDateOnly(dob:string|undefined){
+    if(!dob) return;
+    let theDob = new Date(dob);
+    //return theDob.toISOString().split('T')[0];
+    return new Date(theDob.setMinutes(theDob.getMinutes() - theDob.getTimezoneOffset()))
+    .toISOString().slice(0,10);
   }
 
   cancel(){
