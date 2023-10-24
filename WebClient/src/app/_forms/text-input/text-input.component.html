@@ -1,0 +1,23 @@
+  
+    <div class="form-floating mb-3">
+        <input 
+            type="{{type}}" 
+            name="{{propertyName}}" 
+            [formControl]="control"  
+            placeholder="Enter Password" 
+            class="form-control" 
+            id="{{propertyName}}"
+            [class.is-invalid]="control.touched && control.invalid"
+        >
+
+        <div  class="invalid-feedback" *ngIf="control.errors?.['required']" >
+            Please enter a {{label}}.</div>
+        <div  class="invalid-feedback" *ngIf="control.errors?.['minlength']" >
+            {{label}} must be at least {{control.errors?.['minlength'].requiredLength}} character.</div>
+        <div  class="invalid-feedback" *ngIf="control.errors?.['maxlength']" >
+            {{label}} must be atmost {{control.errors?.['maxlength'].requiredLength}} character.</div>
+        <div  class="invalid-feedback" *ngIf="control.errors?.['notMatching']" >
+            password does not match.</div>
+            <label for="{{propertyName}}" class="form-label">{{label}}</label>
+    </div>
+    

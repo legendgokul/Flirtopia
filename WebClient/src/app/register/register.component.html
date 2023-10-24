@@ -2,73 +2,43 @@
 <!-- ngForm is a angular form instance, we can declare a form using #<custom form name> .
     (ngSubmit) : calls a function once submit event happens through a button with type submit 
 -->
+
 <form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
     <h1 class="text-center text-primary">Sign Up🥰</h1>
     <hr>
-    <div class="form-floating mb-3">
-        <input 
-            type="email" 
-            name="username" 
-            class="form-control" 
-            id="Email"            
-            formControlName="username"
-            placeholder="Enter Username"
-            [class.is-invalid]="registerForm.get('username')?.errors && registerForm.get('username')?.touched"
-        >
-        <div class="invalid-feedback">Please enter a valid username.</div>
-      <label for="Email" class="form-label">Email address</label>
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-    </div>
+ 
+    <app-text-input  
+    [formControl]="$any(registerForm.controls['username'])" 
+    [propertyName]="'username'" 
+    [label]="'Username'"
+    [type]="'text'"
+    ></app-text-input>
+    <app-text-input  
+    [formControl]="$any(registerForm.controls['password'])" 
+    [propertyName]="'password'" 
+    [label]="'Password'"
+    [type]="'password'"
+    ></app-text-input>
+    <app-text-input  
+    [formControl]="$any(registerForm.controls['confirmPassword'])" 
+    [propertyName]="'confirmPassword'" 
+    [label]="'Confirm Password'"
+    [type]="'password'"
+    ></app-text-input>
     
-    <div class="form-floating mb-3">
-        <input 
-            type="password" 
-            name="password" 
-            formControlName="password"  
-            placeholder="Enter Password" 
-            class="form-control" 
-            id="password"
-            [class.is-invalid]="registerForm.get('password')?.errors && registerForm.get('password')?.touched"
-        >
-
-        <div  class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('required')" >
-            Please enter a valid password.</div>
-        <div  class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('minlength')" >
-            password must be min of 4 character.</div>
-        <div  class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('maxlength')" >
-            password must be atmost 8 character.</div>
-        <label for="Password" class="form-label">Password</label>
-    </div>
-    
-
-    <div class="form-floating mb-3">
-        <input 
-            type="password" 
-            name="confirmPassword" 
-            formControlName="confirmPassword"  
-            placeholder="Confirm Password" 
-            class="form-control" 
-            id="confirmPassword"
-            [class.is-invalid]="registerForm.get('confirmPassword')?.errors && registerForm.get('confirmPassword')?.touched"
-        >
-        <div  class="invalid-feedback" *ngIf="registerForm.get('confirmPassword')?.hasError('required')" >
-            Please enter a confirmation password.</div>
-        <div  class="invalid-feedback" *ngIf="registerForm.get('confirmPassword')?.hasError('notMatching')" >
-            confirmation password must match password.</div>
-
-        <label for="confirmPassword" class="form-label">Confirm Password</label>
-    </div>
-
-    <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="SingedInCheck">
-      <label class="form-check-label" for="SingedInCheck">keep me singed in</label>
-    </div>
     
     <div class="text-center mb-3">    
         <button type="submit" class="btn btn-outline-primary  me-4">Submit</button>
         <button type="button" (click)="cancel()" class="btn btn-outline-danger ">Cancel</button>
     </div>
 </form>
+
+
+
+
+
+
+
 
 
 <p>Form value: {{registerForm.value | json}}</p>
