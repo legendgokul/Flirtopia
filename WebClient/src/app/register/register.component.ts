@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +16,7 @@ export class RegisterComponent {
   model :any ={};
   registerForm : FormGroup = new FormGroup({}); // cannot declare it as undefined hence initialize it with empty object.
 
-  constructor(private accountService :AccountService, private toastr:ToastrService) {
+  constructor(private accountService :AccountService, private toastr:ToastrService,private fb:FormBuilder ) {
 
   }
 
@@ -26,13 +26,18 @@ export class RegisterComponent {
 
   // initializing the password.
   initializeForm(){
-    this.registerForm = new FormGroup({
+    this.registerForm = this.fb.group({
       // initial value , [ validation ]
-      username:new FormControl('',Validators.required),
-      password:new FormControl('', [ Validators.required,
+      gender:['Male'],
+      username:['',Validators.required],
+      knownAs:['',Validators.required],
+      dateOfBirth:['',Validators.required],
+      city:['',Validators.required],
+      country:['',Validators.required],
+      password:['', [ Validators.required,
                         Validators.minLength(4), 
-                        Validators.maxLength(8)]),
-      confirmPassword:new FormControl('',[Validators.required,this.matchValues('password')])
+                        Validators.maxLength(8)]],
+      confirmPassword:['',[Validators.required,this.matchValues('password')]]
     });
 
     //we need to preform validation even if user changes initial password.

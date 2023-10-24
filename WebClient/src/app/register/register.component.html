@@ -6,6 +6,15 @@
 <form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
     <h1 class="text-center text-primary">Sign Up🥰</h1>
     <hr>
+    <div class="mb-3">
+        <label style="margin-right: 10px;" > I am a: </label>
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" value="male" formControlName="gender"> Male 
+        </label>
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" value="female" formControlName="gender"> Female 
+        </label>
+    </div> 
  
     <app-text-input  
     [formControl]="$any(registerForm.controls['username'])" 
@@ -13,6 +22,36 @@
     [label]="'Username'"
     [type]="'text'"
     ></app-text-input>
+
+   
+    <app-text-input  
+    [formControl]="$any(registerForm.controls['knownAs'])" 
+    [propertyName]="'knownAs'" 
+    [label]="'KnownAs'"
+    [type]="'text'"
+    ></app-text-input>
+ 
+    <app-text-input  
+    [formControl]="$any(registerForm.controls['dateOfBirth'])" 
+    [propertyName]="'dateOfBirth'" 
+    [label]="'Date.Of.Birth'"
+    [type]="'date'"
+    ></app-text-input>
+
+    <app-text-input  
+    [formControl]="$any(registerForm.controls['city'])" 
+    [propertyName]="'city'" 
+    [label]="'City'"
+    [type]="'text'"
+    ></app-text-input>
+
+    <app-text-input  
+    [formControl]="$any(registerForm.controls['country'])" 
+    [propertyName]="'country'" 
+    [label]="'Country'"
+    [type]="'text'"
+    ></app-text-input> 
+
     <app-text-input  
     [formControl]="$any(registerForm.controls['password'])" 
     [propertyName]="'password'" 
