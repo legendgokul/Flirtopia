@@ -2,6 +2,7 @@ using ApiProject.Data.AppContextFile;
 using ApiProject.Data.CustomModels;
 using ApiProject.DataAccess.Interface;
 using ApiProject.Entities;
+using ApiProject.Helpers;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -24,11 +25,13 @@ namespace ApiProject.DataAccess.Repository{
             .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<MemberDTO>> GetMembersAsync()
+        public async Task<PageList<MemberDTO>> GetMembersAsync(UserParams userParams)
         {
-             return await _context.appUser
-            .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider) // eager loading is missing here because ProjectTo takes care of all relationship 
-            .ToListAsync();
+            var Query =  _context.appUser
+           .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider) // eager loading is missing here because ProjectTo takes care of all relationship 
+           .AsNoTracking();
+
+            return await PageList<MemberDTO>.CreateAsync(Query, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)

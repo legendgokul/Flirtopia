@@ -1,5 +1,6 @@
 using ApiProject.Data.CustomModels;
 using ApiProject.Entities;
+using ApiProject.Helpers;
 
 namespace ApiProject.DataAccess.Interface{
     public interface IUserRepository{
@@ -8,6 +9,6 @@ namespace ApiProject.DataAccess.Interface{
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByNameAsync(string name);
         Task<MemberDTO> GetMemberByNameAsync(string name);
-        Task<IEnumerable<MemberDTO>> GetMembersAsync();
+        Task<PageList<MemberDTO>> GetMembersAsync(UserParams userParams);
     }
 }

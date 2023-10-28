@@ -1,14 +1,14 @@
 ﻿using ApiProject.BusinessLayer.Interface;
-using ApiProject.Data.AppContextFile;
 using ApiProject.Data.CustomModels;
 using ApiProject.DataAccess.Interface;
 using ApiProject.Entities;
+using ApiProject.Extensions;
 using ApiProject.Extensions.LibraryExtensions;
+using ApiProject.Helpers;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+
 
 namespace ApiProject.Controllers;
 
@@ -30,9 +30,24 @@ public class UserController : BaseController
 
     [HttpGet]
     [Route("GetUserList")]
-    public async Task<ActionResult<List<MemberDTO>>> getAppUser()
+    public async Task<ActionResult<PageList<MemberDTO>>> getAppUser([FromQuery] UserParams userParams)
     {
-        var Users = await _userRepo.GetMembersAsync();
+      /*  var currentuser = await _userRepo.GetUserByNameAsync(User.GetUserName());
+        userParams.CurrentUsername = currentuser.UserName;
+
+        if(string.IsNullOrEmpty(userParams.Gender)){
+            userParams.Gender = (currentuser.Gender == "male")?"female":"male";
+        }
+        */
+        var Users = await _userRepo.GetMembersAsync(userParams);
+
+        Response.AddPaginationHeader(new PaginationHeader(
+            Users.CurrentPage,
+            Users.PageSize,
+            Users.TotalCount,
+            Users.TotalPages
+            ));    
+
         return Ok(Users);
     }
 

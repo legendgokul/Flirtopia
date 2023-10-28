@@ -34,7 +34,6 @@ public class AccountController: BaseController{
         
         using var hmac = new HMACSHA512();  // create a instance which will generate 1 key which is used for Salting hash
         
-        
          user.UserName = registerInfo.username;
          user.Email = registerInfo.username +"@gmail.com";
          user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerInfo.password)); //cpnvert password string -> byte using a random generated key
