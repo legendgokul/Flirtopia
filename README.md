@@ -66,3 +66,15 @@
 
 
 
+<h3>Module 13</h3>
+<ul>
+  <li>Implemented Pagination in Api, UI</li>
+  <li>Deferred execution using IQueryable (used in pagination params) </li>
+  <li>Filter/Sort in API,UI</li>
+  <li>Use ActionFilter to log user Activity.</li>
+  <li>DateFormat in Angular.</li>
+  <li>Clientside cache implementation using service layer.</li>
+</ul>
+
+
+
