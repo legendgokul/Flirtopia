@@ -19,7 +19,8 @@ public class TokenService : ITokenService
     {
         //claims can have userid, their role , this can hold other custom details too
         var claims = new List<Claim>{
-            new Claim(JwtRegisteredClaimNames.NameId,user.UserName)
+            new Claim(JwtRegisteredClaimNames.NameId,user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.UniqueName,user.UserName.ToString())
         };
 
         // create a signcred by passing key and signature algo

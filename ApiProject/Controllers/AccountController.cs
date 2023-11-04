@@ -45,7 +45,9 @@ public class AccountController: BaseController{
         return new UserDTO{
          userName = user.UserName,
          token = _tokenService.createToken(user),
-         KnownAs = user.knownAs
+         KnownAs = user.knownAs,
+         Gender = user.Gender
+         
 
         };
      }
@@ -75,7 +77,8 @@ public class AccountController: BaseController{
          userName = user.UserName,
          token = _tokenService.createToken(user),
          PhotoUrl = user.Photos.FirstOrDefault(x=>x.IsMain ==true)?.Url,
-         KnownAs = user.knownAs
+         KnownAs = user.knownAs,
+         Gender = user.Gender
         };
       }
 

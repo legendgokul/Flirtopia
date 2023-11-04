@@ -27,11 +27,30 @@ namespace ApiProject.DataAccess.Repository{
 
         public async Task<PageList<MemberDTO>> GetMembersAsync(UserParams userParams)
         {
-            var Query =  _context.appUser
-           .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider) // eager loading is missing here because ProjectTo takes care of all relationship 
-           .AsNoTracking();
+            var Query =  _context.appUser.AsQueryable();
 
-            return await PageList<MemberDTO>.CreateAsync(Query, userParams.PageNumber, userParams.PageSize);
+            // eager loading is missing here because ProjectTo takes care of all relationship 
+            Query = Query.Where(u => u.UserName != userParams.CurrentUsername);
+            Query = Query.Where(u => u.Gender == userParams.Gender);
+
+            //Age filter 
+            var minDob =  DateTime.UtcNow.AddYears(-userParams.MaxAge);
+            var MaxDob =  DateTime.UtcNow.AddYears(-userParams.MinAge);
+
+            Query = Query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= MaxDob);
+            Query = Query.Where(u => u.Gender == userParams.Gender);
+            
+            Query = userParams.orderBy switch {
+                "createdon" => Query.OrderByDescending(u => u.CreatedOn),
+                _ => Query.OrderByDescending(u => u.LastActive)
+            };
+
+            
+            return await PageList<MemberDTO>.CreateAsync(
+                Query.AsNoTracking()
+                .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider), 
+                userParams.PageNumber, 
+                userParams.PageSize);
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)

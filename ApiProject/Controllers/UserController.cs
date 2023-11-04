@@ -32,13 +32,13 @@ public class UserController : BaseController
     [Route("GetUserList")]
     public async Task<ActionResult<PageList<MemberDTO>>> getAppUser([FromQuery] UserParams userParams)
     {
-      /*  var currentuser = await _userRepo.GetUserByNameAsync(User.GetUserName());
+        var currentuser = await _userRepo.GetUserByNameAsync(User.GetUserName());
         userParams.CurrentUsername = currentuser.UserName;
 
         if(string.IsNullOrEmpty(userParams.Gender)){
-            userParams.Gender = (currentuser.Gender == "male")?"female":"male";
+            userParams.Gender = (currentuser.Gender == "female") ? "male" : "female";
         }
-        */
+        
         var Users = await _userRepo.GetMembersAsync(userParams);
 
         Response.AddPaginationHeader(new PaginationHeader(

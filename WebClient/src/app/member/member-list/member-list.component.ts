@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { Pagination } from 'src/app/_CustomModels/Pagination';
 import { member } from 'src/app/_CustomModels/member';
+import { User } from 'src/app/_CustomModels/user';
+import { userParams } from 'src/app/_CustomModels/userParams';
+import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
 
 @Component({
@@ -15,10 +18,11 @@ export class MemberListComponent {
   //members$ : Observable< member[]> | undefined ;
   members:member[] = [];
   pagination:Pagination |undefined;
-  pageNumber = 1;
-  pageSize = 5;
-
+  userParam :userParams |undefined;
+  genderList = [{value:"male", Display:"Male"},{value:"female", Display:"Female"}];
+  sortBy = [{value:"createdon", Display:"Profile Created"},{value:"lastActive", Display:"Last Active"}];
   constructor(private _memberservice:MembersService){
+     this.userParam = this._memberservice.getUserParams();
 
   }
 
@@ -29,19 +33,29 @@ export class MemberListComponent {
   }
 
   loadMembers(){
-    this._memberservice.getMembers(this.pageNumber,this.pageSize).subscribe({
+    if(!this.userParam) return ;
+    //setting user param post update.
+    this._memberservice.setUserParams(this.userParam); 
+    this._memberservice.getMembers(this.userParam).subscribe({
       next: resp =>{
         if(resp.pagination && resp.result){
           this.pagination = resp.pagination;
-          this.members = resp.result;
+          this.members = resp.result;  
         }
       }
     });
   }
 
+  //Reset filters in the page and its data
+  resetFilters(){
+      this.userParam = this._memberservice.resetUserParams();
+      this.loadMembers();
+  }
+
+
   pageChange(event:any){
-    if(this.pageNumber !== event.page){
-      this.pageNumber = event.page;
+    if(this.userParam && this.userParam.pageNumber !== event.page){
+      this.userParam.pageNumber = event.page;
       this.loadMembers();
     }
   }
