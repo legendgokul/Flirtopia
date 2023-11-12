@@ -118,8 +118,6 @@ Thank you for choosing Flirtopia as your dating app of choice. We're excited to 
   <li>implement reusable form controls</li>
 </ul>
 
-
-
 <h3>Module 13</h3>
 <ul>
   <li>Implemented Pagination in Api, UI</li>
@@ -130,5 +128,10 @@ Thank you for choosing Flirtopia as your dating app of choice. We're excited to 
   <li>Clientside cache implementation using service layer.</li>
 </ul>
 
+<h3>Module 14</h3>
+<ul>
+  <li>many to many relationship for likes feature.</li>
+  <li>Configure entites in DBcontext</li>
+</ul>
 
 
