@@ -44,8 +44,7 @@ namespace ApiProject.DataAccess.Repository{
                 "createdon" => Query.OrderByDescending(u => u.CreatedOn),
                 _ => Query.OrderByDescending(u => u.LastActive)
             };
-
-            
+        
             return await PageList<MemberDTO>.CreateAsync(
                 Query.AsNoTracking()
                 .ProjectTo<MemberDTO>(_mapper.ConfigurationProvider), 
@@ -53,15 +52,16 @@ namespace ApiProject.DataAccess.Repository{
                 userParams.PageSize);
         }
 
-        public async Task<AppUser> GetUserByIdAsync(int id)
+        public async Task<AppUser>  GetUserByIdAsync(int id)
         {
-            return await _context.appUser.FindAsync(id);
+            return await _context.appUser.Include(x=>x.LikedByUsers).Include(x => x.LikedUsers).FirstOrDefaultAsync(x=>x.Id == id);
         }
 
         public async Task<AppUser> GetUserByNameAsync(string name)
         {
             return await _context.appUser
             .Include(p =>p.Photos) // we are eager loading to join photos table to return respective data.
+            .Include(x => x.LikedByUsers).Include(x => x.LikedUsers)
             .FirstOrDefaultAsync(x=>x.UserName == name.ToLower());
         }
 
@@ -76,5 +76,6 @@ namespace ApiProject.DataAccess.Repository{
         {
             return await _context.SaveChangesAsync() > 0; // save changes returns int value of how many count are saved , and negative number in case of any exception.
         }
+
     }
 }
