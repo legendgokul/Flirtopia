@@ -4,12 +4,14 @@ using ApiProject.Entities;
 using ApiProject.Extensions;
 using ApiProject.Extensions.LibraryExtensions;
 using ApiProject.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query;
 
 
 namespace ApiProject.Controllers
 {
+    [Authorize]
     public class LikesController : BaseController
     { 
         private readonly IUserRepository _userRepo;

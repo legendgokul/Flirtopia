@@ -7,12 +7,13 @@ public class DatingAppContext : DbContext
 {
     public DatingAppContext( DbContextOptions options) : base(options)
     {
-
+        ChangeTracker.AutoDetectChangesEnabled = true;
     }
 
     // adding table mapping using DbSet
     public DbSet<AppUser> appUser { get; set; }
     public DbSet<UserLike> Likes {get;set;}
+    public DbSet<Message> Messages {get;set;}
 
     protected override void OnModelCreating(ModelBuilder builder){
         base.OnModelCreating(builder);
@@ -30,6 +31,17 @@ public class DatingAppContext : DbContext
             .WithMany(l=>l.LikedByUsers)
             .HasForeignKey(s=>s.TargetUserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+
+        builder.Entity<Message>()
+        .HasOne(u => u.Recipient)
+        .WithMany(m=>m.MessageReceived)
+        .OnDelete(DeleteBehavior.Restrict);   
+
+         builder.Entity<Message>()
+        .HasOne(u => u.Sender)
+        .WithMany(m=>m.MessageSent)
+        .OnDelete(DeleteBehavior.Restrict); 
     }
 }
 

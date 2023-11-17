@@ -16,8 +16,17 @@ namespace ApiProject.Helpers{
             //Update mapper.
             CreateMap<MemberUpdateDto,AppUser>();
 
-            //redister mapper
+            //register mapper
             CreateMap<RegisterDTO,AppUser>();
+            
+            //message to messageDto
+            CreateMap<Message,MessageDto>()
+            .ForMember(d=> d.SenderPhotoUrl , o=> o.MapFrom(s=>s.Sender.Photos
+                .FirstOrDefault(x =>x.IsMain).Url))
+            .ForMember(d=> d.RecipientPhotoUrl , o=> o.MapFrom(s=>s.Recipient.Photos
+                .FirstOrDefault(x =>x.IsMain).Url));
+
+
         }
 
         /// <summary>

@@ -134,4 +134,10 @@ Thank you for choosing Flirtopia as your dating app of choice. We're excited to 
   <li>Configure entites in DBcontext</li>
 </ul>
 
+<h3>Module 15</h3>
+<ul>
+  <li>Using query params in Angular</li>
+  <li>Using Route resolvers in Angular</li>
+</ul>
+
 

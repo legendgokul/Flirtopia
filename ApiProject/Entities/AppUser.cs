@@ -22,5 +22,9 @@ public class AppUser
     //many to many linking for like feature
     public List<UserLike> LikedByUsers {get;set;}
     public List<UserLike> LikedUsers {get;set;}
+
+    //messages
+    public List<Message> MessageSent {get;set;}
+    public List<Message> MessageReceived   {get;set;} 
 }
 
